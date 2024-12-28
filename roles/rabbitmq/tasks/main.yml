@@ -1,0 +1,28 @@
+- name: set prompt
+  ansible.builtin.shell: set-prompt {{ app_name }}-{{ env }}
+
+- name: copy rabbitmq repo
+  ansible.builtin.copy:
+    src: rabbitmq.repo
+    dest: /etc/yum.repos.d/rabbitmq.repo
+
+- name: install RabbitMQ server
+  ansible.builtin.dnf:
+    name: rabbitmq-server
+    state: installed
+
+- name: enable and restart RabbitMQ service
+  ansible.builtin.systemd_service:
+    name: rabbitmq-server
+    state: restarted
+    enabled: true
+
+- name: add user and provide permissions to it in RabbitMQ server
+  community.rabbitmq.rabbitmq_user:
+    user: roboshop
+    password: roboshop123
+    vhost: /
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    state: present
