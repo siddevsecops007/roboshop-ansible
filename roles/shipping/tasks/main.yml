@@ -1,0 +1,29 @@
+- name: set prompt
+  ansible.builtin.shell: set-prompt {{ app_name }}-{{ env }}
+
+#  print_heading "Restart Shipping Service"
+#  systemctl restart shipping
+#  status_check $?
+
+- name: including maven setup role from common
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: maven_setup
+
+- name: install MySQL Client
+  ansible.builtin.dnf:
+    name: mysql
+    state: installed
+
+- name: running for loop to load master data into MySQL
+  ansible.builtin.shell: mysql -h mysql-{{ env }}.siddevsecops.icu -uroot -pRoboshop@1 < /app/db/{{ item }}.sql
+  loop:
+    - schema
+    - app-user
+    - master-data
+
+- name: Restart Shipping Service
+  ansible.builtin.systemd_service:
+    name: shipping
+    state: restarted
+    enabled: true

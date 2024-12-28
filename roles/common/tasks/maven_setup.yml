@@ -1,0 +1,23 @@
+
+#print_heading "download application Dependencies"
+#mvn clean package &>>$log_file
+
+#mv target/$app_name-1.0.jar $app_name.jar &>>$log_file
+#status_check $?
+#
+#
+#systemd_setup
+
+- name: install maven
+  ansible.builtin.dnf:
+    name: maven
+    state: installed
+
+- name: Include app_prerequisites task
+  ansible.builtin.include_tasks:
+    file: app_prerequisites.yml
+
+- name: download application Dependencies
+  ansible.builtin.shell: mvn clean package; mv target/$app_name-1.0.jar $app_name.jar
+  args:
+    chdir: /app
