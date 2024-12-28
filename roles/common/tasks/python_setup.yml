@@ -1,0 +1,29 @@
+#systemd_setup
+
+- name: install Python
+  ansible.builtin.dnf:
+    name: {{ item }}
+    state: installed
+    loop:
+      - python3
+      - gcc
+      - python3-devel
+
+- name: Include app_prerequisites task
+  ansible.builtin.include_tasks:
+    file: app_prerequisites.yml
+
+
+- name: download application Dependencies
+  ansible.builtin.shell: pip3 install -r requirements.txt
+  args:
+    chdir: /app
+
+- name: calling systemd setup
+  ansible.builtin.include_tasks:
+    file: systemd_setup.yml
+
+
+
+
+
