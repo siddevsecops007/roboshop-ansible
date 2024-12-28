@@ -4,10 +4,16 @@
   ansible.builtin.dnf:
     name: "{{ item }}"
     state: installed
-    loop:
-      - python3
-      - gcc
-      - python3-devel
+  loop:
+    - python3
+    - gcc
+    - python3-devel
+
+- name: install maven
+  ansible.builtin.dnf:
+    name: maven
+    state: installed
+
 
 - name: Include app_prerequisites task
   ansible.builtin.include_tasks:
