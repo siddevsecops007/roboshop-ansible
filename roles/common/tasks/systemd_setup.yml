@@ -1,0 +1,11 @@
+- name: Copying service file into etc path
+  ansible.builtin.template:
+    src: "{{app_name}}.service"
+    dest: /etc/systemd/system/{{app_name}}.service
+
+- name: reloading and restarting the service
+  ansbile.buitlin.systemd_service:
+    name: "{{app_name}}"
+    state: restarted
+    enabled: true
+    daemon_reload: true

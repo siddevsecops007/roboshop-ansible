@@ -1,0 +1,24 @@
+- name: set prompt
+  ansible.builtin.shell: set-prompt {{app_name}}-{{env}}
+
+- name: copy mongodb repo file
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: update the listener address
+  ansible.builtin.replace:
+    path: /etc/mongod.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+- name: install mongodb
+  ansible.builtin.dnf:
+    name: mongodb-org
+    state: installed
+
+- name: enable and restart mongodb service
+  ansible.builtin.systemd_service:
+    name: mongod
+    state: restarted
+    enabled: true
