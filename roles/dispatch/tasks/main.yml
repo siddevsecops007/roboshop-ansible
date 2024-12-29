@@ -1,0 +1,7 @@
+
+#go_lang_setup
+
+- name: set prompt
+  ansible.builtin.shell: set-prompt {{app_name}}-{{env}}
+
+

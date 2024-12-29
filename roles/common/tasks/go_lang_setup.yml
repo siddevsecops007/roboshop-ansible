@@ -1,0 +1,17 @@
+
+#print_heading "Download application dependencies"
+#go mod init dispatch &>>$log_file
+#go get &>>$log_file
+#go build &>>$log_file
+#status_check $?
+#
+#systemd_setup
+
+- name: Installing the golang
+  ansible.builtin.dnf:
+    name: golang
+    state: installed
+
+- name: Include app_prerequisites task
+  ansible.builtin.include_tasks:
+    file: app_prerequisites.yml
