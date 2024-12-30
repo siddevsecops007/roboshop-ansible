@@ -1,6 +1,3 @@
-- name: set prompt
-  ansible.builtin.shell: set-prompt {{ app_name }}-{{ env }}
-
 - name: copy rabbitmq repo
   ansible.builtin.copy:
     src: rabbitmq.repo

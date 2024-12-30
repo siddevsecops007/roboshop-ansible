@@ -1,6 +1,3 @@
-- name: set prompt
-  ansible.builtin.shell: set-prompt {{ app_name }}-{{ env }}
-
 - name: including python setup role from common
   ansible.builtin.include_role:
     name: common

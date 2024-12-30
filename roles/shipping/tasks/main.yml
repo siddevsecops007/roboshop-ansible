@@ -1,9 +1,3 @@
-- name: set prompt
-  ansible.builtin.shell: set-prompt {{ app_name }}-{{ env }}
-
-#  print_heading "Restart Shipping Service"
-#  systemctl restart shipping
-#  status_check $?
 
 - name: including maven setup role from common
   ansible.builtin.include_role:
