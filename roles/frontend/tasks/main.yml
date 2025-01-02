@@ -35,20 +35,3 @@
     name: nginx
     state: restarted
     enabled: true
-
-
-
-
-
-
-
-
-
-
-
-
-
-#print_heading "restart and enable the nginx service"
-#systemctl restart nginx &>>$log_file
-#systemctl enable nginx &>>$log_file
-#status_check $?
