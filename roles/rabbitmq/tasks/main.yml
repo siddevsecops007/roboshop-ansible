@@ -16,8 +16,8 @@
 
 - name: add user and provide permissions to it in RabbitMQ server
   community.rabbitmq.rabbitmq_user:
-    user: {{ lookup('hashi_vault', 'roboshop-{{ env }}/data/rabbitmq:rabbitMQ_user token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}}
-    password: {{ lookup('hashi_vault', 'roboshop-{{ env }}/data/rabbitmq:rabbitMQ_password token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}}
+    user: "{{ lookup('hashi_vault', 'roboshop-{{ env }}/data/rabbitmq:rabbitMQ_user token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}}"
+    password: "{{ lookup('hashi_vault', 'roboshop-{{ env }}/data/rabbitmq:rabbitMQ_password token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}}"
     vhost: /
     configure_priv: .*
     read_priv: .*
