@@ -2,5 +2,14 @@
   ansible.builtin.shell: set-prompt {{ component }}-{{ env }}
 
 
-#- name: increase disk partition
-#  ansible.builtin.shell:
+- name: increase disk partition
+  ansible.builtin.shell: growpart /dev/xvda 4
+  ignore_errors: yes
+
+
+- name: extend lv
+  ansible.builtin.shell: lvextend -r -L {{ item.size }} /dev/mapper/RootVG-{{ item.volume }}
+  ignore_errors: yes
+  loop: "{{ lvm_sizes }}"
+
+
