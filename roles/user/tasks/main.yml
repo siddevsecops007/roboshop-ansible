@@ -1,4 +1,10 @@
-- name: including nodejs set role from common
+#- name: including nodejs set role from common
+#  ansible.builtin.include_role:
+#    name: common
+#    tasks_from: nodejs
+
+
+- name: install docker
   ansible.builtin.include_role:
     name: common
-    tasks_from: nodejs
+    tasks_from: docker

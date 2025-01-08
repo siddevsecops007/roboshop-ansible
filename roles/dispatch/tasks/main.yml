@@ -1,7 +1,13 @@
+#
+##go_lang_setup
+#
+#- name: set prompt
+#  ansible.builtin.shell: set-prompt {{ component }}-{{env}}
+#
+#
 
-#go_lang_setup
 
-- name: set prompt
-  ansible.builtin.shell: set-prompt {{ component }}-{{env}}
-
-
+- name: install docker
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: docker

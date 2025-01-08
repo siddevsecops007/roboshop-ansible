@@ -1,23 +1,29 @@
+#
+#- name: including maven setup role from common
+#  ansible.builtin.include_role:
+#    name: common
+#    tasks_from: maven_setup
+#
+#- name: install MySQL Client
+#  ansible.builtin.dnf:
+#    name: mysql
+#    state: installed
+##mysql_root_password
+#- name: running for loop to load master data into MySQL
+#  ansible.builtin.shell: mysql -h mysql-{{ env }}.siddevsecops.icu -uroot -p{{ lookup('hashi_vault', 'roboshop-{{ env }}/data/shipping:mysql_root_password token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}} < /app/db/{{ item }}.sql
+#  loop:
+#    - schema
+#    - app-user
+#    - master-data
+#
+#- name: Restart Shipping Service
+#  ansible.builtin.systemd_service:
+#    name: "{{ component }}"
+#    state: restarted
+#    enabled: true
 
-- name: including maven setup role from common
+
+- name: install docker
   ansible.builtin.include_role:
     name: common
-    tasks_from: maven_setup
-
-- name: install MySQL Client
-  ansible.builtin.dnf:
-    name: mysql
-    state: installed
-#mysql_root_password
-- name: running for loop to load master data into MySQL
-  ansible.builtin.shell: mysql -h mysql-{{ env }}.siddevsecops.icu -uroot -p{{ lookup('hashi_vault', 'roboshop-{{ env }}/data/shipping:mysql_root_password token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}} < /app/db/{{ item }}.sql
-  loop:
-    - schema
-    - app-user
-    - master-data
-
-- name: Restart Shipping Service
-  ansible.builtin.systemd_service:
-    name: "{{ component }}"
-    state: restarted
-    enabled: true
+    tasks_from: docker

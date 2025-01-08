@@ -1,37 +1,44 @@
-- name: disable nginx
-  ansible.builtin.shell: dnf module disable nginx -y
+#- name: disable nginx
+#  ansible.builtin.shell: dnf module disable nginx -y
+#
+#- name: enable nginx 24
+#  ansible.builtin.shell: dnf module enable nginx:1.24 -y
+#
+#- name: install nginx
+#  ansible.builtin.dnf:
+#    name: nginx
+#    state: installed
+#
+#- name: copy nginx conf file
+#  ansible.builtin.template:
+#    src: nginx.conf
+#    dest: /etc/nginx/nginx.conf
+#
+#- name: remove existing app-content
+#  ansible.builtin.file:
+#    path: /usr/share/nginx/html/
+#    state: absent
+#
+#- name: create application directory
+#  ansible.builtin.file:
+#    path: /usr/share/nginx/html
+#    state: directory
+#
+#- name: download and extract app-content
+#  ansible.builtin.unarchive:
+#    src: https://roboshop-artifacts.s3.amazonaws.com/{{ component }}-v3.zip
+#    dest: /usr/share/nginx/html
+#    remote_src: yes
+#
+#- name: restart and enable the nginx service
+#  ansible.builtin.systemd_service:
+#    name: nginx
+#    state: restarted
+#    enabled: true
 
-- name: enable nginx 24
-  ansible.builtin.shell: dnf module enable nginx:1.24 -y
+- name: install docker
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: docker
 
-- name: install nginx
-  ansible.builtin.dnf:
-    name: nginx
-    state: installed
 
-- name: copy nginx conf file
-  ansible.builtin.template:
-    src: nginx.conf
-    dest: /etc/nginx/nginx.conf
-
-- name: remove existing app-content
-  ansible.builtin.file:
-    path: /usr/share/nginx/html/
-    state: absent
-
-- name: create application directory
-  ansible.builtin.file:
-    path: /usr/share/nginx/html
-    state: directory
-
-- name: download and extract app-content
-  ansible.builtin.unarchive:
-    src: https://roboshop-artifacts.s3.amazonaws.com/{{ component }}-v3.zip
-    dest: /usr/share/nginx/html
-    remote_src: yes
-
-- name: restart and enable the nginx service
-  ansible.builtin.systemd_service:
-    name: nginx
-    state: restarted
-    enabled: true
