@@ -27,3 +27,21 @@
   ansible.builtin.include_role:
     name: common
     tasks_from: docker
+
+- name: Schema containers
+  loop:
+    - app-user
+    - schema
+    - master-data
+  containers.podman.podman_container:
+    name: shipping-schema-{{item}}
+    recreate: true
+    image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
+    state: started
+    env:
+      DB_TYPE: "{{ lookup('hashi_vault', 'roboshop-{{env}}/data/shipping:DB_TYPE token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}}"
+      APP_GIT_URL: "{{ lookup('hashi_vault', 'roboshop-{{env}}/data/shipping:APP_GIT_URL token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}}"
+      DB_USER: "{{ lookup('hashi_vault', 'roboshop-{{env}}/data/shipping:DB_USER token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}}"
+      DB_PASS: "{{ lookup('hashi_vault', 'roboshop-{{env}}/data/shipping:DB_PASS token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}}"
+      SCHEMA_FILE: "db/{{ item }}.sql"
+      DB_HOST: "{{ lookup('hashi_vault', 'roboshop-{{env}}/data/shipping:DB_HOST token={{ vault_token }} url=http://vault-internal.siddevsecops.icu:8200')}}"
