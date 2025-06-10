@@ -6,9 +6,9 @@
 #
 #
 
-
-- name: install docker
-  ansible.builtin.include_role:
-    name: common
-    tasks_from: docker
+#
+#- name: install docker
+#  ansible.builtin.include_role:
+#    name: common
+#    tasks_from: docker
 
